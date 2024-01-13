@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  database:
+    image: mysql:8.0.26
+    container_name: match-db
+    volumes:
+      - db_data:/var/lib/data
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: match
+      MYSQL_USER: match
+      MYSQL_PASSWORD: match
+    ports:
+      - 33067:3306
+  app:
+    entrypoint: ['nest', 'start', '--debug', '0.0.0.0:9229', '--watch']
+    container_name: match-api
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    restart: unless-stopped
+    depends_on:
+      - database
+    env_file:
+      - .env
+
+volumes:
+  db_data: {}
