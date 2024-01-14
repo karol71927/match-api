@@ -30,11 +30,98 @@ type Team {
   players: [Player!]!
 }
 
+type TeamResponse {
+  edges: [TeamEdge!]
+  pageInfo: TeamPageInfo
+}
+
+type TeamEdge {
+  cursor: String
+  node: Team
+}
+
+type TeamPageInfo {
+  startCursor: String
+  endCursor: String
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+}
+
+type PlayerResponse {
+  edges: [PlayerEdge!]
+  pageInfo: PlayerPageInfo
+}
+
+type PlayerEdge {
+  cursor: String
+  node: Player
+}
+
+type PlayerPageInfo {
+  startCursor: String
+  endCursor: String
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+}
+
+type MatchResponse {
+  edges: [MatchEdge!]
+  pageInfo: MatchPageInfo
+}
+
+type MatchEdge {
+  cursor: String
+  node: Match
+}
+
+type MatchPageInfo {
+  startCursor: String
+  endCursor: String
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+}
+
 type Query {
-  findAllTeams: [Team!]!
-  findOneTeamByIdWithPlayers: Team!
-  findAllPlayers: [Player!]!
-  findOnePlayerByIdWithTeam: Player!
-  findAllMatches: [Match!]!
-  findOneMatchByIdWithTeamsAndPlayers: Match!
+  findAllTeams(
+    """Paginate before opaque cursor"""
+    before: String
+
+    """Paginate after opaque cursor"""
+    after: String
+
+    """Paginate first"""
+    first: Float
+
+    """Paginate last"""
+    last: Float
+  ): TeamResponse!
+  findOneTeamByIdWithPlayers(id: String!): Team!
+  findAllPlayers(
+    """Paginate before opaque cursor"""
+    before: String
+
+    """Paginate after opaque cursor"""
+    after: String
+
+    """Paginate first"""
+    first: Float
+
+    """Paginate last"""
+    last: Float
+  ): PlayerResponse!
+  findOnePlayerByIdWithTeam(id: String!): Player!
+  findAllMatches(
+    """Paginate before opaque cursor"""
+    before: String
+
+    """Paginate after opaque cursor"""
+    after: String
+
+    """Paginate first"""
+    first: Float
+
+    """Paginate last"""
+    last: Float
+  ): MatchResponse!
+  findOneMatchByIdWithTeamsAndPlayers(id: String!): Match!
 }

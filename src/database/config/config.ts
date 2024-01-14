@@ -7,5 +7,6 @@ export default (env = process.env): DatabaseEnvironmentVariables => {
     DB_PASSWORD: env.DB_PASSWORD,
     DB_USERNAME: env.DB_USERNAME,
     DB_NAME: env.DB_NAME,
+    SEED_DATABASE: env.SEED_DATABASE === '1',
   };
 };

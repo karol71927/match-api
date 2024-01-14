@@ -1,3 +1,4 @@
+import { Migration1705242881623 } from './Migration1705242881623';
 import { Migration1705142111338 } from './Migration1705142111338';
 import { Migration1705142201778 } from './Migration1705142201778';
 import { Migration1705142245119 } from './Migration1705142245119';
@@ -10,4 +11,5 @@ export const migrations = [
   Migration1705142245119,
   Migration1705145015480,
   Migration1705146118400,
+  Migration1705242881623,
 ];

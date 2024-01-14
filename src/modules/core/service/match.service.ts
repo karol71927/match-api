@@ -12,8 +12,8 @@ export class MatchService {
     private readonly matchRepository: MatchRepositoryInterface,
   ) {}
 
-  findAll(): Promise<Match[]> {
-    return this.matchRepository.findAll();
+  findAll(limit: number, offset: number): Promise<[Match[], number]> {
+    return this.matchRepository.findAllWithPagination(limit, offset);
   }
 
   findOneByIdWithTeamsAndPlayers(id: string): Promise<Match> {

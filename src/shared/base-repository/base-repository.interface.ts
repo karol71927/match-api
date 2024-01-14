@@ -1,3 +1,3 @@
 export interface BaseRepositoryInterface<T> {
-  findAll(): Promise<T[]>;
+  findAllWithPagination(limit: number, offset: number): Promise<[T[], number]>;
 }

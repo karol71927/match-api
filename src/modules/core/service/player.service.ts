@@ -12,8 +12,8 @@ export class PlayerService {
     private readonly playerRepository: PlayerRepositoryInterface,
   ) {}
 
-  async findAll(): Promise<Player[]> {
-    return this.playerRepository.findAll();
+  async findAll(limit: number, offset: number): Promise<[Player[], number]> {
+    return this.playerRepository.findAllWithPagination(limit, offset);
   }
 
   async findOneByIdWithTeam(id: string): Promise<Player> {

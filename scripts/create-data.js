@@ -23,12 +23,13 @@ function getRandomAddress() {
 function getRandomDate() {
   const start = new Date('2020-01-01').getTime();
   const end = new Date().getTime();
-  return new Date(start + Math.random() * (end - start));
+  const randomDate = new Date(start + Math.random() * (end - start));
+  return randomDate.toISOString().slice(0, 19).replace('T', ' ');
 }
 
 const teamIds = []
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 50; i++) {
   const teamId = randomUUID();
   teamIds.push(teamId);
   console.log(
@@ -38,38 +39,55 @@ for (let i = 0; i < 100; i++) {
 
 const playerIds = []
 
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 100; i++) {
   const playerId = randomUUID();
   playerIds.push(playerId);
   console.log(
     `INSERT INTO players (id, first_name, last_name, number, team_id) VALUES
-    ("${getRandomArrayElement(teamIds)}", "${getRandomName()}", "${getRandomName()}", ${Math.round(Math.random() * 10)}, "${getRandomArrayElement(teamIds)}");`
+    ("${playerId}", "${getRandomName()}", "${getRandomName()}", ${Math.round(Math.random() * 10)}, "${getRandomArrayElement(teamIds)}");`
   )
 }
 
 const matchIds = []
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 15; i++) {
   const matchId = randomUUID();
   matchIds.push(matchId);
   console.log(
-    `INSERT INTO matches (id, address, occursAt) VALUES
+    `INSERT INTO matches (id, address, occurs_at) VALUES
     ("${matchId}", "${getRandomAddress()}", "${getRandomDate()}");`
   )
 }
-
+const teamMatchesSet = new Set()
 for (let i = 0; i < matchIds.length * teamIds.length * 2; i++) {
+  const teamId = getRandomArrayElement(teamIds);
+  const matchId = getRandomArrayElement(matchIds);
+  if (teamMatchesSet.has(teamId + matchId)) {
+    continue;
+  }
+  teamMatchesSet.add(teamId + matchId)
+
   console.log(
     `INSERT INTO team_matches (team_id, match_id) VALUES
-    ("${getRandomArrayElement(teamIds)}", "${getRandomArrayElement(matchIds)}");`
+    ("${teamId}", "${matchId}");`
   )
 }
 
+const playerMatchesSet = new Set()
 
 for (let i = 0; i < matchIds.length * playerIds.length * 5; i++) {
+  const playerId = getRandomArrayElement(playerIds);
+  const matchId = getRandomArrayElement(matchIds);
+
+  if (playerMatchesSet.has(matchId + playerId)) {
+    continue;
+  }
+
+  playerMatchesSet.add(matchId + playerId)
+
   console.log(
-    `INSERT INTO player_matches (player_ids, match_id) VALUES
-    ("${getRandomArrayElement(playerIds)}", "${getRandomArrayElement(matchIds)}");`
+    `INSERT INTO player_matches (player_id, match_id) VALUES
+    ("${playerId}", "${matchId}");`
   )
 }
 

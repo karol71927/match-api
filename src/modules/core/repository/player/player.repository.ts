@@ -10,8 +10,14 @@ export class PlayerRepository
     super(Player, datasource.createEntityManager());
   }
 
-  async findAll(): Promise<Player[]> {
-    return this.find({});
+  async findAllWithPagination(
+    limit: number,
+    offset: number,
+  ): Promise<[Player[], number]> {
+    return this.findAndCount({
+      take: limit,
+      skip: offset,
+    });
   }
 
   async findOneByIdWithTeam(id: string): Promise<Player> {

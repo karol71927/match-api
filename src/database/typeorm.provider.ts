@@ -27,7 +27,6 @@ export const typeormProvider: Provider = {
       logging: 'all',
       namingStrategy: new SnakeNamingStrategy(),
     });
-    console.log(dataSource);
     return dataSource.initialize();
   },
   inject: [ConfigService],
