@@ -5,4 +5,6 @@ export const TEAM_REPOSITORY_TOKEN = 'TEAM_REPOSITORY_TOKEN';
 
 export interface TeamRepositoryInterface extends BaseRepositoryInterface<Team> {
   findOneByIdWithPlayers(id: string): Promise<Team>;
+
+  findOneByPlayerId(playerId: string): Promise<Team>;
 }

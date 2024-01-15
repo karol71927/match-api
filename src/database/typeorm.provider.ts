@@ -24,7 +24,7 @@ export const typeormProvider: Provider = {
       migrations: migrations,
       migrationsTableName: 'migrations',
       migrationsRun: true,
-      logging: 'all',
+      logging: process.env.NODE_ENV !== 'production' ? false : 'all',
       namingStrategy: new SnakeNamingStrategy(),
     });
     return dataSource.initialize();

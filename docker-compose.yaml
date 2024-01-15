@@ -6,7 +6,7 @@ services:
     container_name: match-db
     volumes:
       - db_data:/var/lib/data
-    restart: always
+    restart: 'no'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: match

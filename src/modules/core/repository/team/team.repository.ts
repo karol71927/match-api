@@ -27,4 +27,8 @@ export class TeamRepository
       relations: ['players'],
     });
   }
+
+  async findOneByPlayerId(playerId: string): Promise<Team> {
+    return this.findOne({ where: { players: { id: playerId } } });
+  }
 }

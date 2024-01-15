@@ -24,4 +24,22 @@ export class MatchRepository
       relations: ['teams', 'players'],
     });
   }
+
+  async findByPlayerIdWithPagination(
+    playerId: string,
+    limit: number,
+    offset: number,
+  ): Promise<[Match[], number]> {
+    return this.findAndCount({
+      take: limit,
+      skip: offset,
+      where: {
+        players: {
+          id: playerId,
+        },
+      },
+      relationLoadStrategy: 'join',
+      relations: ['players.team'],
+    });
+  }
 }

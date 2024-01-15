@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TeamResolver } from './resolver/team.resolver';
+import { TeamResolver } from './transport/graphql/resolver/team.resolver';
 import { TeamService } from './service/team.service';
-import { PlayerResolver } from './resolver/player.resolver';
-import { MatchResolver } from './resolver/match.resolver';
+import { PlayerResolver } from './transport/graphql/resolver/player.resolver';
+import { MatchResolver } from './transport/graphql/resolver/match.resolver';
 import { teamRepositoryProvider } from './repository/team/team.repository-provider';
 import { DatabaseModule } from '../../database/database.module';
 import { matchRepositoryProvider } from './repository/match/match.repository-provider';

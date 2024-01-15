@@ -16,6 +16,18 @@ export class PlayerService {
     return this.playerRepository.findAllWithPagination(limit, offset);
   }
 
+  async findByTeamId(
+    teamId: string,
+    limit: number,
+    offset: number,
+  ): Promise<[Player[], number]> {
+    return this.playerRepository.findByTeamIdWithPagination(
+      teamId,
+      limit,
+      offset,
+    );
+  }
+
   async findOneByIdWithTeam(id: string): Promise<Player> {
     return this.playerRepository.findOneByIdWithTeam(id);
   }

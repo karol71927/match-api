@@ -12,11 +12,23 @@ export class MatchService {
     private readonly matchRepository: MatchRepositoryInterface,
   ) {}
 
-  findAll(limit: number, offset: number): Promise<[Match[], number]> {
+  async findAll(limit: number, offset: number): Promise<[Match[], number]> {
     return this.matchRepository.findAllWithPagination(limit, offset);
   }
 
-  findOneByIdWithTeamsAndPlayers(id: string): Promise<Match> {
+  async findOneByIdWithTeamsAndPlayers(id: string): Promise<Match> {
     return this.matchRepository.findOneByIdWithTeamsAndPlayers(id);
+  }
+
+  async findByPlayerId(
+    playerId: string,
+    limit: number,
+    offset: number,
+  ): Promise<[Match[], number]> {
+    return this.matchRepository.findByPlayerIdWithPagination(
+      playerId,
+      limit,
+      offset,
+    );
   }
 }

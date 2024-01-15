@@ -19,4 +19,8 @@ export class TeamService {
   async findOneByIdWithPlayers(id: string): Promise<Team> {
     return this.teamRepository.findOneByIdWithPlayers(id);
   }
+
+  async findOneByPlayerId(playerId: string): Promise<Team> {
+    return this.teamRepository.findOneByPlayerId(playerId);
+  }
 }

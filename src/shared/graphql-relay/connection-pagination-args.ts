@@ -70,19 +70,17 @@ export function getPagingParameters(args: ConnectionPaginationArgs) {
 export default class ConnectionPaginationArgs implements ConnectionArguments {
   @Field(() => String, {
     nullable: true,
-    description: 'Paginate before opaque cursor',
   })
   public before?: ConnectionCursor;
 
   @Field(() => String, {
     nullable: true,
-    description: 'Paginate after opaque cursor',
   })
   public after?: ConnectionCursor;
 
-  @Field(() => Number, { nullable: true, description: 'Paginate first' })
+  @Field(() => Number, { nullable: true })
   public first?: number;
 
-  @Field(() => Number, { nullable: true, description: 'Paginate last' })
+  @Field(() => Number, { nullable: true })
   public last?: number;
 }

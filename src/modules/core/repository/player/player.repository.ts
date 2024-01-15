@@ -20,6 +20,22 @@ export class PlayerRepository
     });
   }
 
+  async findByTeamIdWithPagination(
+    teamId: string,
+    limit: number,
+    offset: number,
+  ): Promise<[Player[], number]> {
+    return this.findAndCount({
+      take: limit,
+      skip: offset,
+      where: {
+        team: {
+          id: teamId,
+        },
+      },
+    });
+  }
+
   async findOneByIdWithTeam(id: string): Promise<Player> {
     return this.findOne({
       where: { id },
