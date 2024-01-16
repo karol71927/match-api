@@ -27,7 +27,7 @@ export class TeamResolver {
   @Query(() => TeamPaginatedResponse, {
     description: 'drużyn dla konkretnego meczu wraz z graczami',
   })
-  async findByMatchIdWithPlayers(
+  async findTeamsByMatchIdWithPlayers(
     @Args() paginationArgs: ConnectionPaginationArgs,
     @Args('matchId') matchId: string,
   ): Promise<TeamPaginatedResponse> {

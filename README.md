@@ -10,13 +10,16 @@ To run the app you simply need to run
 docker compose up
 ```
 
+On Macbook M1, M2, M3, etc. you need to set platform for mysql container.
+Uncomment line 10 in [docker compose](./docker-compose.yaml).
+
 For compose you need to add .env file
 
 ```env
 DB_HOST=match-db
 DB_PORT=3306
-DB_PASSWORD=match
-DB_USERNAME=match
+DB_PASSWORD=root
+DB_USERNAME=root
 DB_NAME=match
 
 SEED_DATABASE=1
@@ -26,11 +29,7 @@ SEED_DATABASE=1
 
 There is prepared sql which contains structure and data [sql](match.sql) but it does not contain trigger from [Migration1705242881623](./src/database/migrations/Migration1705242881623.ts).
 
-First run could fail on migrations. There is a need to set global in MySQL as root:
-
-```sql
-SET GLOBAL log_bin_trust_function_creators = 1;
-```
+You should connect to database as root because there is trigger. When it is created as non-root user it can cause an error.
 
 ## Architecture description
 
@@ -51,3 +50,44 @@ Project structure from `src` directory
 I made repositories with interfaces and providers, because I want to make separation between ORM and my application. For example if I want to change TypeORM to Sequalize or MikroORM I need to change only implementation of repositories and database folder.
 
 GraphQL is in transport directory, because logic does not need to couple with GraphQL. For instance I want to use REST API, so I can use services which are used by GraphQL transport and I only need to create controllers.
+
+## Database
+
+Database uses MySQL 8.0.26
+
+### Entity relations diagram
+
+```mermaid
+erDiagram
+    matches ||--o{ player_matches : ""
+    players ||--o{ player_matches : ""
+    teams ||--o{ team_matches : ""
+    matches ||--o{ team_matches : ""
+    players ||--o{ teams : ""
+    matches {
+        varchar(36) id PK
+        varchar(255) address
+        varchar(255) occurs_at
+    }
+    players {
+        varchar(36) id PK
+        varchar(255) first_name
+        varchar(255) last_name
+        int number
+        varchar(36) team_id FK
+    }
+    teams {
+        varchar(36) id PK
+        varchar(255) name UK
+    }
+    team_matches {
+        varchar(36) team_id FK,UK
+        varchar(36) match_id FK,UK
+    }
+    player_matches {
+        varchar(36) player_id FK,UK
+        varchar(36) match_id FK,UK
+    }
+```
+
+Inserting into player_matches is protected by trigger. For example there are Team A with player 1 and player 2. Team A does not play in match but someone wants to add player 1 to match. It causes an error which tells that team must play in match.
