@@ -94,7 +94,7 @@ type Query {
   findAllTeams(before: String, after: String, first: Float, last: Float): TeamPaginatedResponse!
 
   """drużyn dla konkretnego meczu wraz z graczami"""
-  findByMatchIdWithPlayers(before: String, after: String, first: Float, last: Float): TeamPaginatedResponse!
+  findByMatchIdWithPlayers(before: String, after: String, first: Float, last: Float, matchId: String!): TeamPaginatedResponse!
 
   """listy graczy"""
   findAllPlayers(before: String, after: String, first: Float, last: Float): PlayerPaginatedResponse!

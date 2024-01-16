@@ -23,4 +23,16 @@ export class TeamService {
   async findOneByPlayerId(playerId: string): Promise<Team> {
     return this.teamRepository.findOneByPlayerId(playerId);
   }
+
+  async findByMatchIdWithPlayers(
+    matchId: string,
+    limit: number,
+    offset: number,
+  ): Promise<[Team[], number]> {
+    return this.teamRepository.findByMatchIdWithPlayersWithPagination(
+      matchId,
+      limit,
+      offset,
+    );
+  }
 }

@@ -2,6 +2,7 @@ import { Team } from './team.model';
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -26,5 +27,10 @@ export class Player {
   team: Team;
 
   @ManyToMany(() => Match)
+  @JoinTable({
+    name: 'player_matches',
+    inverseJoinColumn: { name: 'match_id' },
+    joinColumn: { name: 'player_id' },
+  })
   matches: Match[];
 }

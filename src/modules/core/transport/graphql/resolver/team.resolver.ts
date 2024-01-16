@@ -29,10 +29,15 @@ export class TeamResolver {
   })
   async findByMatchIdWithPlayers(
     @Args() paginationArgs: ConnectionPaginationArgs,
+    @Args('matchId') matchId: string,
   ): Promise<TeamPaginatedResponse> {
     const { limit, offset } = getPagingParameters(paginationArgs);
 
-    const [teams, count] = await this.teamService.findAll(limit, offset);
+    const [teams, count] = await this.teamService.findByMatchIdWithPlayers(
+      matchId,
+      limit,
+      offset,
+    );
 
     return connectionFromArraySlice(teams, paginationArgs, {
       arrayLength: count,

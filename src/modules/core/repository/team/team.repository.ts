@@ -31,4 +31,24 @@ export class TeamRepository
   async findOneByPlayerId(playerId: string): Promise<Team> {
     return this.findOne({ where: { players: { id: playerId } } });
   }
+
+  async findByMatchIdWithPlayersWithPagination(
+    matchId: string,
+    limit: number,
+    offset: number,
+  ): Promise<[Team[], number]> {
+    return this.findAndCount({
+      skip: offset,
+      take: limit,
+      relations: ['players'],
+      relationLoadStrategy: 'join',
+      where: {
+        players: {
+          matches: {
+            id: matchId,
+          },
+        },
+      },
+    });
+  }
 }
