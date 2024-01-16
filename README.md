@@ -27,9 +27,9 @@ SEED_DATABASE=1
 
 `SEED_DATABASE` will add data to your database
 
-There is prepared sql which contains structure and data [sql](match.sql) but it does not contain trigger from [Migration1705242881623](./src/database/migrations/Migration1705242881623.ts).
+There is prepared sql which contains structure and data [sql](match.sql), but it does not contain trigger from [Migration1705242881623](./src/database/migrations/Migration1705242881623.ts).
 
-You should connect to database as root because there is trigger. When it is created as non-root user it can cause an error.
+You should connect to database as root, because there is trigger. When it is created as non-root user, it can cause an error.
 
 ## Architecture description
 
@@ -90,4 +90,4 @@ erDiagram
     }
 ```
 
-Inserting into player_matches is protected by trigger. For example there are Team A with player 1 and player 2. Team A does not play in match but someone wants to add player 1 to match. It causes an error which tells that team must play in match.
+Inserting into player_matches is protected by trigger. For example there is Team A with player 1 and player 2. Team A does not play in a match, but someone wants to add player 1 to this match. It causes an error which tells that you cannot add a player to match, when player's Team is not playing in this match.
